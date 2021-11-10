@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Sistemas distribuidos</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+	<h1>Sistemas distribuidos</h1>
+	<input type="text" id="numero_fibonacci" name="numero_fibonacci">
+	<button onclick="generar_fibonacci();">generar</button>
+	<div id="numeros"></div>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		const socket = io();
+		var index;
+		socket.on('connection');
+		socket.on("new user", newUser => console.log(newUser))
+
+		socket.on("INFO", (data) => {
+			document.getElementById("numeros").innerHTML = "";
+			data.numeros.forEach(element => {
+				var elemento = document.createElement("div");
+				elemento.innerHTML = element;
+				document.getElementById("numeros").appendChild(elemento);
+			});
+		})
+		socket.on("desconexion")
+		function generar_fibonacci() {
+			var numero = document.getElementById("numero_fibonacci").value;
+
+			socket.emit('number', { numero: numero });
+		}
+	</script>
+
+
+
+</body>
+
+</html>
